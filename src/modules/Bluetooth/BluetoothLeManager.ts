@@ -6,20 +6,38 @@ class BluetoothLeManager {
   constructor() {
     this.bleManager = new BleManager();
   }
-
-  scanForPeripherals = (
+/*
+  scanForPeripherals_old = (
     onDeviceFound: (device: Device | null) => void,
     onError: (error: BleError) => void,
   ) => {
     this.bleManager.startDeviceScan(null, null, (error, scannedDevice) => {
+        console.log('---->scanForPeripherals')
       if (error) {
         return onError(error);
       }
       return onDeviceFound(scannedDevice);
     });
   };
+*/
+
+scanForPeripherals = (
+    onDeviceFound: (arg0: {
+      type: string;
+      payload: BleError | Device | null;
+    }) => void,
+  ) => {
+    this.bleManager.startDeviceScan(null, null, (error, scannedDevice) => {
+      onDeviceFound({type: 'SAMPLE', payload: scannedDevice ?? error});
+      return;
+    });
+    return () => {
+      this.bleManager.stopDeviceScan();
+    };
+  };
 
   stopScanningForPeripherals = () => {
+    console.log('---->stopScanningForPeripherals')
     this.bleManager.stopDeviceScan();
   };
 }

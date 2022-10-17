@@ -11,8 +11,9 @@ type TakeableDevice = {
     take: (cb: (message: any | END) => void) => Device;
   };
   
+  //console.log('onDiscoveredPeripheral')
   function* watchForPeripherals(): Generator<AnyAction, void, TakeableDevice> {
-    const onDiscoveredPeripheral = () =>    
+    const onDiscoveredPeripheral = () => 
       eventChannel(emitter => {
         return bluetoothLeManager.scanForPeripherals(emitter);
       });
