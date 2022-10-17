@@ -53,7 +53,7 @@ const Home: FC = () => {
             </>
            ))}
           <Button
-            title="Press Here To Scan"
+            title="Press Here to scan"
             onPress={() => {
               dispatch(scanForPeripherals());
             }}
